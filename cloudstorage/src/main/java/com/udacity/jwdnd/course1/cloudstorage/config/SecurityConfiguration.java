@@ -5,15 +5,23 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import com.udacity.jwdnd.course1.cloudstorage.services.AuthenticationService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+	private AuthenticationService authenticationService;
+
+	public SecurityConfiguration(AuthenticationService authenticationService) {
+		this.authenticationService = authenticationService;
+	}
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		// TODO Auto-generated method stub
-		super.configure(auth);
+		auth.authenticationProvider(authenticationService);
 	}
 
 	@Override
@@ -23,6 +31,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.formLogin().loginPage("/login").permitAll();
 
 		http.formLogin().defaultSuccessUrl("/home", true);
+
+		http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
+				.invalidateHttpSession(true).deleteCookies("JSESSIONID");
 	}
 
 }
