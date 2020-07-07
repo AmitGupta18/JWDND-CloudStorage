@@ -19,14 +19,6 @@ public class UserService {
 		this.hashService = hashService;
 	}
 
-	public UserMapper getUserMapper() {
-		return userMapper;
-	}
-
-	public HashService getHashService() {
-		return hashService;
-	}
-
 	/**
 	 * @param username
 	 * @return
@@ -48,6 +40,10 @@ public class UserService {
 		String hashedPassword = hashService.getHashedValue(user.getPassword(), encodedSalt);
 		return userMapper.insert(new User(null, user.getUsername(), encodedSalt, hashedPassword, user.getFirstName(),
 				user.getLastName()));
+	}
+
+	public User getUserByName(String username) {
+		return userMapper.getUser(username);
 	}
 
 }

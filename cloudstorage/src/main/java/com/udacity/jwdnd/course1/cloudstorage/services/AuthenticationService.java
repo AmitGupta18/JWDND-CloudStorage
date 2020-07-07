@@ -49,7 +49,7 @@ public class AuthenticationService implements AuthenticationProvider {
 			String hashPassword = hashService.getHashedValue(pwd, endodedSalt);
 
 			if (user.getPassword().equals(hashPassword)) {
-				return new UsernamePasswordAuthenticationToken(username, pwd, new ArrayList<>());
+				return new UsernamePasswordAuthenticationToken(user, pwd, new ArrayList<>());
 			}
 		}
 		return null;
