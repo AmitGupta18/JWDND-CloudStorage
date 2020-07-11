@@ -17,7 +17,7 @@
 		<div class="alert alert-success fill-parent" th:if="${param.success}">
 			<h1 class="display-5">Success</h1>
 			<span>Your changes were successfully saved. Click <a
-				th:href="@{/home}">here</a> to continue.
+				th:href="@{/home}" id="redirectToHome">here</a> to continue.
 			</span>
 		</div>
 		<div class="alert alert-danger fill-parent" th:if="${param.error}">
